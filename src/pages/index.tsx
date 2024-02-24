@@ -1,5 +1,6 @@
 import { HomeContainer, Product } from "../styles/pages/home";
-import { useKeenSlider} from 'keen-slider/react'
+import { useKeenSlider} from 'keen-slider/react';
+import Link from "next/link";
 
 import Image from "next/image";
 
@@ -30,13 +31,17 @@ const [sliderRef] = useKeenSlider ({
       {products.map( product => {
         return (
           <>
-          <Product key={product.id} className="keen-slider__slide">
+          <Link  href={`/product/${product.id}`}>
+          <Product
+          key={product.id} 
+          className="keen-slider__slide">
           <Image src={product.imageUrl} alt="" width={520} height={480}/>
           <footer>
             <strong>{product.name}</strong>
             <span>{product.price}</span>
           </footer>
       </Product>
+      </Link>
       </>
         )
       })}
@@ -51,7 +56,7 @@ export const getStaticProps: GetStaticProps = async () => {
     expand: ['data.default_price']
   })
 
- 
+
 
   const products = response.data.map(product => {
     const price = product.default_price as Stripe.Price
