@@ -99,7 +99,7 @@ export const FooterModal = styled('div',{
 
  
   button:{
-    marginTop: 'auto',
+    marginTop: '55px',
     backgroundColor: '$green500',
     border: 0,
     color: '$white',
@@ -108,7 +108,7 @@ export const FooterModal = styled('div',{
     cursor: 'pointer',
     fontWeight: 'bold',
     fontSize: '$md',
-    paddingTop:"55px"
+   
   }  
 
 
