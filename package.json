@@ -10,14 +10,17 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.0.15",
+    "@radix-ui/react-dialog": "^1.0.5",
     "@stitches/react": "^1.2.8",
+    "@stripe/stripe-js": "^3.0.7",
     "axios": "^1.6.7",
     "keen-slider": "^6.8.6",
     "next": "^14.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-modal": "^3.16.1",
-    "stripe": "^14.17.0"
+    "stripe": "^14.17.0",
+    "use-shopping-cart": "^3.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",

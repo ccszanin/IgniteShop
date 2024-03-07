@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { FooterModal, ImageModal, ModalItems, ProductsSelect, QuantText, TextModal, ValueItems, ValueText } from "../styles/pages/modal";
+import { FooterModal,   QuantText,  ValueItems,ModalItems, ValueText } from "../styles/pages/cartModal";
 import { X } from "@phosphor-icons/react";
 import { CSSProperties } from "@stitches/react";
+import { CartItem } from "./cartItem";
+import { useShoppingCart } from "use-shopping-cart";
+import { Product } from "use-shopping-cart/core";
 
 
 const customStyles = {
@@ -56,8 +59,47 @@ const closeStyles: CSSProperties = {
   zIndex: 2,
 };
 
+export type IProduct = Product & {
+  defaultPriceId?: string;
+  quantity?: number;
+};
+
+
+
 
 const CartModal = ({ isOpen, onRequestClose }) => {
+
+  const {
+    cartDetails,
+    cartCount,
+    formattedTotalPrice,
+  } = useShoppingCart();
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
+  const products: IProduct[] = Object.keys(cartDetails).map(item => cartDetails[item]);
+
+  async function handleCheckout() {
+    try {
+      setIsCreatingCheckoutSession(true)
+
+      //COMO O API ROUTE DO NEXT RODA NO MESMO ENDEREÇO DA NOSSA APLICAÇÃO PODEMOS UTILIZAR DIRETO O AXIOS SEM UM BASEURL, POIS JÁ É SETADO POR PADRÃO A URL DE EXECUÇÃO DA NOSSA APLICAÇÃO
+      const response = await axios.post('/api/checkout', {
+        products: products,
+      })
+
+      const { checkoutUrl } = response.data;
+
+      //REDIRECIONANDO PARA PÁGINA EXTERNA
+      if (typeof window !== undefined) {
+        window.location.href = checkoutUrl;
+      }
+    } catch (error) {
+      setIsCreatingCheckoutSession(false)
+      alert('Falha ao redirecionar ao checkout!')
+    }
+  }
+
+
+
   return (
     <>
     <Modal
@@ -67,21 +109,20 @@ const CartModal = ({ isOpen, onRequestClose }) => {
       style={customStyles}
     >
      <X size={24} weight="bold" style={closeStyles} onClick={onRequestClose} />
+  
       <ModalItems>
         <h2>Sacola de Compras</h2>
-        <ProductsSelect>
-        <ImageModal>
-          {/* <Image src={} alt="" width={520} height={480} /> */}
-        </ImageModal> 
-         <TextModal>    
-           <strong>Camiseta</strong>
-            <span>R$99999</span>
-            <p>Remover</p>
-            </TextModal> 
-            </ProductsSelect>
+        {products.map(product => {
+              return (
+                <CartItem
+                  key={product.id}
+                  product={product}
+                />
+              )
+            })}
       </ModalItems>
     
-
+      
     <FooterModal>
     <QuantText>
     <h2>Quantidade</h2>

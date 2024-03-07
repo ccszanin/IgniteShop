@@ -6,6 +6,7 @@ import logoImg from "../assets/logo.svg";
 import { Handbag } from "@phosphor-icons/react";
 import { useState } from "react";
 import CartModal from "./cartModal";
+import { CartProvider, formatCurrencyString, useShoppingCart } from 'use-shopping-cart';
 
 globalStyles();
 
@@ -19,8 +20,20 @@ export default function App({ Component, pageProps }: AppProps) {
   const closeCartModal = () => {
     setCartModalOpen(false);
   };
+const StripeKey = process.env.STRIPE_PUBLIC_KEY
 
   return (
+    <CartProvider
+    mode="payment"
+    cartMode="client-only"
+    stripe={StripeKey}
+    successUrl="stripe.com"
+    cancelUrl="twitter.com/dayhaysoos"
+    currency="USD"
+    allowedCountries={['US', 'GB', 'CA']}
+    billingAddressCollection={true}
+    shouldPersist
+  >
     <Container>
       <Header>
         <Image src={logoImg} alt="" />
@@ -29,8 +42,12 @@ export default function App({ Component, pageProps }: AppProps) {
           <div className="cart-count">1</div>
         </button>
       </Header>
+     
       <Component {...pageProps} />
+    
       <CartModal isOpen={isCartModalOpen} onRequestClose={closeCartModal} />
+
     </Container>
+    </CartProvider>
   );
 }

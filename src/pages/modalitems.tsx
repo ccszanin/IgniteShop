@@ -28,7 +28,7 @@ const customStyles = {
   },
 };
 
-const CustomModal: React.FC<ModalProps> = ({ isOpen, onRequestClose, children }) => {
+const CustomModal: React.FC<ModalProps> = ({ isOpen, onRequestClose,  }) => {
   return (
     <Modal
     isOpen={isOpen}
@@ -36,7 +36,7 @@ const CustomModal: React.FC<ModalProps> = ({ isOpen, onRequestClose, children })
     contentLabel="Carrinho de Compras"
     style={customStyles}
   >
-      {children}
+    
     </Modal>
   );
 };
