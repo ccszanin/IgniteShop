@@ -20,6 +20,14 @@ h2:{
   fontSize: "$lg",
   color:"$gray100",
   marginBottom:"2rem",
+},
+
+"> section":{
+  display: 'flex',
+  flexDirection: 'column',
+  gap: "1.5rem",
+   flex: 1,
+   overflowY: "auto",
 }
 })
 
@@ -109,3 +117,37 @@ button:{
 }
 
 });
+
+export const FinalizationDetails = styled("section",{
+  display: "flex",
+  flexDirection: "column",
+  gap: 8,
+  marginBottom: 55,
+
+
+  div:{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  
+
+  p:{
+    fontSize:"$md",
+    color:"$gray300"
+  },
+
+  '&:last-child':{
+    fontWeight:"bold",
+
+    span:{
+      fontSize:"$md",
+    },
+
+    p:{
+      color: "$gray100",
+      fontSize:"$xl"
+    }
+  }
+},
+
+  })

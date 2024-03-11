@@ -8,14 +8,13 @@ import { stripe } from "../assets/lib/stripe";
 import {  GetStaticProps } from "next";
 import Stripe from "stripe";
 import { Handbag } from "@phosphor-icons/react";
+import { CartButton } from "./CartButton";
+import { UseCart } from "../hooks/useCart";
+import { IProduct } from "../contexts/CartContext";
+import { MouseEvent } from "react";
 
 interface HomeProps{
-  products:{
-    id: string;
-    name: string;
-    imageUrl: string;
-    price: string;
-  }[]
+ products: IProduct[];
 }
 
 export default function Home({ products}:HomeProps ) {
@@ -25,6 +24,13 @@ const [sliderRef] = useKeenSlider ({
     spacing: 48,
   }
 })
+
+const{ addToCart } = UseCart();
+
+ function handleAddToCart(e: MouseEvent<HTMLButtonElement>, product: IProduct){
+   e.preventDefault();
+   addToCart(product);
+ }
 
   return (
     <>
@@ -47,13 +53,15 @@ const [sliderRef] = useKeenSlider ({
           <Image src={product.imageUrl} alt="" width={520} height={480}/>
           <footer>
             <Items>
+              <div>
             <strong>{product.name}</strong>
             <span>{product.price}</span>
+            </div>
             </Items>
-            
-            <button  >
-            <Handbag size={32} color="white" weight="bold" />
-            </button>
+            <CartButton
+             color="green"
+              size="large"
+              onClick={(e) => handleAddToCart(e, product)}/>
           </footer>
       </Product>
       </Link>
@@ -84,6 +92,8 @@ export const getStaticProps: GetStaticProps = async () => {
         style: 'currency',
         currency: 'BRL',
       }).format(price.unit_amount/100),
+      numberPrice:price.unit_amount/100,
+      defaultPriceId: price.id,
     }
   })
 

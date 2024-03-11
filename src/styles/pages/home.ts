@@ -46,6 +46,12 @@ export const Product = styled("div", {
     display: "flex",
     justifyContent: "space-between",
 
+     div:{
+     display: "flex",
+     flexDirection: "column",
+     gap: 4,
+    },
+
     strong: {
       fontSize: "$lg",
       color: "$gray100",
@@ -58,17 +64,7 @@ export const Product = styled("div", {
     },
   },
 
-  button: {
-    backgroundColor: "$green500",
-    borderRadius: "6px",
-    width: "56px",
-    height: "56px",
-    alignItems: "center",
-    justifyContent: "center",
-    display: "flex",
-    border: "none",
-    cursor:'pointer'
-  },
+ 
 
   "&:hover": {
     footer: {

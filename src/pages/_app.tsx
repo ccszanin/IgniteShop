@@ -9,6 +9,7 @@ import { CartProvider, formatCurrencyString, useShoppingCart } from 'use-shoppin
 import { CartButton } from "./CartButton";
 import Link from "next/link";
 import { Cart } from "./Cart";
+import { CartContextProvider } from "../contexts/CartContext";
 
 globalStyles();
 
@@ -25,17 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
 const StripeKey = process.env.STRIPE_PUBLIC_KEY
 
   return (
-    <CartProvider
-    mode="payment"
-    cartMode="client-only"
-    stripe={StripeKey}
-    successUrl="stripe.com"
-    cancelUrl="twitter.com/dayhaysoos"
-    currency="USD"
-    allowedCountries={['US', 'GB', 'CA']}
-    billingAddressCollection={true}
-    shouldPersist
-  >
+    <CartContextProvider>
     <Container>
       <Header>
         <Link href={'/'}>
@@ -48,6 +39,6 @@ const StripeKey = process.env.STRIPE_PUBLIC_KEY
     
 
     </Container>
-    </CartProvider>
+    </CartContextProvider>
   );
 }
