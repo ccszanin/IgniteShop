@@ -11,21 +11,30 @@ import { Handbag } from "@phosphor-icons/react";
 import { CartButton } from "./CartButton";
 import { UseCart } from "../hooks/useCart";
 import { IProduct } from "../contexts/CartContext";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
+import { ProductSkeleton } from "../ProductSkeleton";
 
 interface HomeProps{
  products: IProduct[];
 }
 
 export default function Home({ products}:HomeProps ) {
+  const [isLoading, setIsLoading] = useState(true)
 const [sliderRef] = useKeenSlider ({
   slides:{
     perView: 3,
-    spacing: 48,
+    spacing: 60,
   }
 })
 
-const{ addToCart } = UseCart();
+useEffect(() =>{
+  const timeOut = setTimeout (() => setIsLoading(false), 2000)
+  
+ return ( )=> clearTimeout(timeOut);
+
+}, [])
+
+const{ addToCart, checkIfItemAlreadyExists } = UseCart();
 
  function handleAddToCart(e: MouseEvent<HTMLButtonElement>, product: IProduct){
    e.preventDefault();
@@ -40,6 +49,15 @@ const{ addToCart } = UseCart();
 
 
     <HomeContainer ref={sliderRef} className="keen-slider">
+      {isLoading?(
+       <>
+        <ProductSkeleton className="keen-slider"/>
+      <ProductSkeleton className="keen-slider"/>
+      <ProductSkeleton className="keen-slider"/>
+       </>
+
+      ): (
+      <>
       {products.map( product => {
         return (
        
@@ -61,13 +79,22 @@ const{ addToCart } = UseCart();
             <CartButton
              color="green"
               size="large"
+              disabled= { checkIfItemAlreadyExists(product.id)}
               onClick={(e) => handleAddToCart(e, product)}/>
           </footer>
       </Product>
       </Link>
   
         )
-      })}
+      })} 
+      
+      </>
+
+      )}
+
+     
+
+   
         
     </HomeContainer>
     </>

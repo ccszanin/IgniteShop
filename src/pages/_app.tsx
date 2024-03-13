@@ -10,6 +10,7 @@ import { CartButton } from "./CartButton";
 import Link from "next/link";
 import { Cart } from "./Cart";
 import { CartContextProvider } from "../contexts/CartContext";
+import { useRouter } from "next/router";
 
 globalStyles();
 
@@ -24,6 +25,10 @@ export default function App({ Component, pageProps }: AppProps) {
     setCartModalOpen(false);
   };
 const StripeKey = process.env.STRIPE_PUBLIC_KEY
+  
+ const {pathname} = useRouter();
+
+ const ShowCartButton = pathname !== '/success';
 
   return (
     <CartContextProvider>
@@ -32,7 +37,8 @@ const StripeKey = process.env.STRIPE_PUBLIC_KEY
         <Link href={'/'}>
         <Image src={logoImg} alt="" />
         </Link>
-        <Cart/>
+        {ShowCartButton && <Cart/>}
+        
       </Header>
      
       <Component {...pageProps} />

@@ -7,7 +7,7 @@ export const SuccessContainer = styled("main", {
   justifyContent: 'center',
   margin: '0 auto',
   marginTop: 'auto',
-  marginBottom: '2rem',
+  marginBottom: '15rem',
 
   h1: {
     fontSize: '$xl',
@@ -37,7 +37,7 @@ export const SuccessContainer = styled("main", {
   },
 })
 
-export const ImagesContainer = styled("div", {
+export const ImagesContainer = styled("section", {
   display: 'flex',
   alignItems: 'center',
   marginBottom: '3rem',
@@ -48,13 +48,14 @@ export const ImagesContainer = styled("div", {
 })
 
 
+
 export const ImageContainer = styled("div", {
   position: 'relative',
   width: 140,
   height: 140,
   background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
   boxShadow: '0px 0px 60px rgba(0, 0, 0, 0.8)',
-  borderRadius: '1000px',
+  borderRadius: '50%',
   padding: '0.25rem',
 
   display: 'flex',
